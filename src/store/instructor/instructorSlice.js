@@ -3,6 +3,11 @@ import { createSlice } from '@reduxjs/toolkit';
 export const instructorSlice = createSlice({
     name: 'instructor',
     initialState: {
+        paises: [],
+        provincias: [],
+        cantones: [],
+        parroquias: [],
+
         club: '',
         instructores: [],
 
@@ -11,6 +16,26 @@ export const instructorSlice = createSlice({
 
     },
     reducers: {
+        setPaises: (state, action) => {
+            
+            state.paises = action.payload
+
+        },
+        setProvincias: (state, action) => {
+            
+            state.provincias = action.payload
+
+        },
+        setCantones: (state, action) => {
+            
+            state.cantones = action.payload
+
+        },
+        setParroquias: (state, action) => {
+            
+            state.parroquias = action.payload
+
+        },
         setClub: (state, action) => {
             
             state.club = action.payload
@@ -21,6 +46,9 @@ export const instructorSlice = createSlice({
             state.instructores = action.payload
 
         },
+        addInstructor: (state, {payload}) => {
+            state.instructores.push(payload)
+        },
         setAlumnos: (state, action) => {
             
             state.alumnos = action.payload
@@ -29,4 +57,4 @@ export const instructorSlice = createSlice({
     }
 });
 // Action creators are generated for each case reducer function
-export const { setAlumnos, setInstructores, setClub } = instructorSlice.actions;
+export const { setPaises,setProvincias,setCantones,setParroquias,setAlumnos, setInstructores,addInstructor, setClub } = instructorSlice.actions;

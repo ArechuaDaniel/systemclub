@@ -14,6 +14,7 @@ import MostrarAlumnos from './auth/MostrarAlumnos'
 import Asenso from './auth/Asenso'
 import MostrarInstructores from './auth/MostrarInstructores'
 import EditarClub from './auth/EditarClub'
+import CrearInstructor from './auth/CrearInstructor'
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
             <Route index element={<Side />} />
             <Route path='home' element={<Side />} />
             <Route path='editar-club' element={<EditarClub />} />
+            <Route path='crear-instructor' element={<CrearInstructor />} />
             <Route path='instructores' element={<MostrarInstructores />} />
             <Route path='instructor' element={<Instructor />} />
             <Route path='perfil' element={<Perfil />} />

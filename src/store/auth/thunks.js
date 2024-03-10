@@ -1,5 +1,6 @@
 import axios from "axios";
 import { checkingCredential, login, logout } from "./authSlice"
+import { setInstructores } from "../instructor/instructorSlice";
 
 export const checkingAuthentication = (correo, password) => {
     return async(dispatch) => {
@@ -72,5 +73,6 @@ export const olvidePassword = ({correo, password}) => {
                     }          
     }
 }
+
 
 

@@ -2,11 +2,10 @@ import React from 'react'
 
 import Barra from "../components/Barra";
 import { useDispatch, useSelector } from "react-redux";
-//import {startLoadingInstructor, updateInstructor, updatePassword } from "../store/alumno/thunk";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { formatearFecha } from "../helpers/formatearFecha";
 import Swal from "sweetalert2";
+import { startLoadingClub, updatePasswordClub } from '../store/instructor/thunks';
 
 
 const CambiarPassword = () => {
@@ -17,25 +16,21 @@ const CambiarPassword = () => {
         
     
         const dispatch = useDispatch();
-        const {instructor} = useSelector(state => state.alumno)
+        const {club} = useSelector(state => state.instructor)
         const navigate = useNavigate();
-        const cedulaInstructor = instructor.cedulaInstructor;
-        console.log(cedulaInstructor);
+        const idClub = club.idClub
+        
     
         //const navigate = Navigate();
         useEffect(() => {
           
-            dispatch(startLoadingInstructor())
+            dispatch(startLoadingClub())
         }, [])
         
-        useEffect(() => {
+        // useEffect(() => {
           
-            //dispatch(startLoadingInstructor())
-            
-            
-            
-    
-        }, [instructor])
+        //     //dispatch(startLoadingInstructor())
+        // }, [club])
         
         const regresar = (e) => {
             e.preventDefault()
@@ -56,7 +51,7 @@ const CambiarPassword = () => {
                         icon: "success"
                     });
     
-                    navigate('/tkdsystem/api/perfil')
+                    navigate('/systemclub/api/perfil')
     
                 }
             });
@@ -94,8 +89,8 @@ const CambiarPassword = () => {
             }
             try {
     
-               dispatch(updatePassword({cedulaInstructor,password}))
-               navigate('/tkdsystem/api/perfil') 
+               dispatch(updatePasswordClub({idClub,password}))
+               navigate('/systemclub/api/perfil') 
             } catch (error) {
     
                 setAlerta({
@@ -129,26 +124,15 @@ const CambiarPassword = () => {
                                 className=' shadow rounded-lg md:p-2 p-10 m-10'>
     
                                 <div className='my-5'>
-                                    <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='cedulaInstructor'>Cédula*</label>
+                                    <label className=' text-gray-600  text-xl font-bold ' >Nombre del Club</label>
                                     <input
                                         type='text'
-                                        id='cedulaInstructor'
-                                        placeholder='Ingresa tu cédula'
+                                        id='club'
                                         className='w-full mt-3 p-3 border rounded-xl bg-gray-50'
-                                        value={instructor.cedulaInstructor}
+                                        value={club.club}
                                     />
                                 </div>
-                                <div className='my-5'>
-                                    <label className=' text-gray-600  text-xl font-bold' htmlFor='primerApellido'>Nombre y Apellido</label>
-                                    <input
-                                        type='text'
-                                        id='primerApellido'
-                                        placeholder='Ingresa tu Apellido Paterno'
-                                        className='capitalize w-full mt-3 p-3 border rounded-xl bg-gray-50'
-                                        value={`${instructor.primerNombre} ${instructor.primerApellido}`}
-                                        
-                                    />
-                                </div>
+                               
                                 
                                 <div className='my-5'>
                                     <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='password'>Cambiar contraseña</label>

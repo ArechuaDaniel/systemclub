@@ -49,7 +49,8 @@ const Perfil = () => {
                                     <span className="align-middle mr-2 material-symbols-outlined">
                                         pin_drop
                                     </span>
-                                    Ecuador, Pichincha, Quito
+                                    {`${club.pais}, ${club.provincia}, ${club.canton}`}
+                                    
                                 </p>
                                 <p className=''>
                                     <span className="align-middle mr-2 material-symbols-outlined">
@@ -99,6 +100,12 @@ const Perfil = () => {
                                         </span>
                                     </p>
                                     <p className='capitalize font-bold'>
+                                        Parroquia:
+                                        <span className='font-normal'>
+                                            {` ${club.parroquia}`}
+                                        </span>
+                                    </p>
+                                    <p className='capitalize font-bold'>
                                         Dirección:
                                         <span className='font-normal'>
                                             {` ${club.direccion}`}
@@ -112,7 +119,7 @@ const Perfil = () => {
                             <div className='shadow-2xl bg-white p-10  m-10  '>
                                 <h2 className='flex justify-between font-bold'>Cambiar Contraseña
                                     <NavLink
-                                        to={'/tkdsystem/api/cambiar-password'}
+                                        to={'/systemclub/api/cambiar-password'}
                                     >
 
                                         <span className="material-symbols-outlined align-middle mr-2">

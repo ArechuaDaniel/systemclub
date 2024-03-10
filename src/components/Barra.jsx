@@ -10,12 +10,7 @@ const Barra = () => {
         { name: "Home", link: "/systemclub/api/home", value: "dashboard" },
         { name: "Intsructores", link: "/systemclub/api/instructores", value: "groups" },
         { name: "Alumnos", link: "/systemclub/api/alumnos", value: "groups" },
-        //{ name: "Registrar Alumnos", link: "/systemclub/api/crear-alumno" },
-        { name: "Horarios", link: "/systemclub/api/horarios", value: "schedule" },
-        { name: "Asistencias", link: "/systemclub/api/asistencias", value: "fact_check" },
-        { name: "Pagos", link: "/systemclub/api/pagos", value: "payments" },
         { name: "Categorías", link: "/systemclub/api/alumnos", value: "category" },
-
         { name: "Campeonatos", link: "/systemclub/api/alumnos", value: "rewarded_ads" },
         { name: "Asensos", link: "/systemclub/api/asensos", value: "license" },
 

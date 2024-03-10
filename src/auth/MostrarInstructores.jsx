@@ -77,7 +77,7 @@ const MostrarInstructores = () => {
                                 Datos  de los Instructores </h1>
                             <NavLink
                                 className=''
-                                to={'/tkdsystem/api/crear-alumno'}>
+                                to={'/systemclub/api/crear-instructor'}>
     
                                 <button className='bg-sky-600 hover:bg-sky-700 p-3 text-white rounded-xl font-bold flex justify-center items-center capitalize'>
                                     <span className="material-symbols-outlined align-middle mr-2">
@@ -137,7 +137,7 @@ const MostrarInstructores = () => {
                                     <tr>
                                         <th className=' w-16 text-center p-3'>#</th>
                                         <th className=' w-48 text-left p-3'>Nº Identificación</th>
-                                        <th className=' w-48 text-left p-3' >Alumno</th>
+                                        <th className=' w-48 text-left p-3' >Instructor</th>
                                         <th className=' w-32 text-left p-3' >Edad</th>
                                         <th className=' w-32 text-left p-3' >Género</th>
                                         <th className=' w-32 text-left p-3'>Dirección</th>

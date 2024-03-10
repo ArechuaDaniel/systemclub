@@ -4,7 +4,7 @@
     import { useEffect, useState } from "react";
     import { edadFecha, formatearFecha } from "../helpers/formatearFecha";
     import Swal from "sweetalert2";
-import { startLoadingClub, updateClub } from "../store/instructor/thunks";
+import { startLoadingCantones, startLoadingClub, startLoadingPaises, startLoadingParroquias, startLoadingProvincias, updateClub } from "../store/instructor/thunks";
     
     
     const EditarClub = () => {
@@ -14,11 +14,14 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
             const [fechaAfiliacion, setFechaAfiliacion] = useState('');
             const [telefono, setTelefono] = useState('');
             const [correo, setCorreo] = useState('');
-            const [idParroquia, setIdParroquia] = useState('');
             const [direccion, setDireccion] = useState('');
+            const [idParroquia, setIdParroquia] = useState('');
+            const [idPais, setIdPais] = useState('');
+            const [idProvincia, setIdProvincia] = useState('')
+            const [idCanton, setIdCanton] = useState('');
         
             const dispatch = useDispatch();
-            const {club} = useSelector(state => state.instructor)
+            const {club, paises, provincias, cantones, parroquias} = useSelector(state => state.instructor)
             const navigate = useNavigate();
             
         
@@ -28,13 +31,17 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
             const idClub = club.idClub
             
             //const navigate = Navigate();
-            console.log(idClub);
+            //console.log(idClub);
             useEffect(() => {
               
                 dispatch(startLoadingClub())
+                dispatch(startLoadingPaises())
+                dispatch(startLoadingProvincias())
+                
             }, [])
             
             useEffect(() => {  
+                //dispatch(startLoadingCantones({idProvincia}))
                 setClub(club.club)
                 setDirector(club.director)
                 setFechaAfiliacion(formatearFecha(club.fechaAfiliacion))
@@ -42,7 +49,25 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
                 setCorreo(club.correo)
                 setIdParroquia(club.idParroquia)
                 setDireccion(club.direccion)
+                setIdPais(club.idPais)
+                setIdProvincia(club.idProvincia)
+                setIdCanton(club.idCanton)
             }, [club])
+            useEffect(() => {
+                
+                try {
+                    dispatch(startLoadingCantones({idProvincia}))
+                } catch (error) {
+                    console.log(error);
+                }
+            
+            }, [idProvincia])
+            useEffect(() => {
+                dispatch(startLoadingParroquias({idCanton}))
+            
+            }, [idCanton])
+            
+            
             
             // console.log(cedula,primerApellido,segundoApellido,primerNombre,segundoNombre,fechaNacimiento,direccion,fechaRegistro,telefono,idClub,correo, genero);
             const regresar = (e) => {
@@ -74,7 +99,7 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
                 e.preventDefault();
         
         
-                if ([club, director, fechaAfiliacion, telefono, correo, idParroquia, direccion].includes('')) {
+                if ([clubs, director, fechaAfiliacion, telefono, correo, idParroquia, direccion].includes('')) {
                     Swal.fire({
                         title: "Todos los campos son obligatorios",
                         //text: "That thing is still around?",
@@ -86,14 +111,14 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
                 
                 try {
         
-                   dispatch(updateClub({club, director, fechaAfiliacion, telefono, correo, idParroquia, direccion, idClub}))
+                   dispatch(updateClub({clubs, director, fechaAfiliacion, telefono, correo, idParroquia, direccion, idClub}))
                    navigate('/systemclub/api/perfil') 
                 } catch (error) {
-        
-                    setAlerta({
-                        msg: error.response.data.msg,
-                        error: true
-                    })
+                    console.log(error);
+                    // setAlerta({
+                    //     msg: error.response.data.msg,
+                    //     error: true
+                    // })
         
                 }
         
@@ -178,24 +203,74 @@ import { startLoadingClub, updateClub } from "../store/instructor/thunks";
                                         />
                                     </div>
                                     <div className='my-5'>
+                                        <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='idPais'>País</label>
+                                        <select id="idPais" className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black '
+                                            value={idPais}
+                                            onChange={(e) => setIdPais(e.target.value)}
+                                        >
+                                            
+                                            
+                                            <option value="" >--Seleccione--</option>
+                                             {
+                                                paises.map( pais => (
+                                                <option key={pais.idPais} value={pais.idPais}>{pais.pais}</option>
+                                                ))
+                                            }
+                                            
+                                        </select>
+                                    </div>
+                                    <div className='my-5'>
+                                        <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='idProvincia'>Provincia</label>
+                                        <select id="idProvincia" className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black '
+                                            value={idProvincia}
+                                            onChange={(e) => setIdProvincia(e.target.value)}
+                                        >
+                                            
+                                            
+                                            <option value="" >--Seleccione--</option>
+                                             {
+                                                provincias.map( provincia => (
+                                                <option key={provincia.idProvincia} value={provincia.idProvincia}>{provincia.provincia}</option>
+                                                ))
+                                            }
+                                            
+                                        </select>
+                                    </div>
+                                    <div className='my-5'>
+                                        <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='idCanton'>Canton</label>
+                                        <select id="idCanton" className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black '
+                                            value={idCanton}
+                                            onChange={(e) => setIdCanton(e.target.value)}
+                                        >
+                                            
+                                            
+                                            <option value="" >--Seleccione--</option>
+                                             {
+                                                cantones.map( canton => (
+                                                <option key={canton.idCanton} value={canton.idCanton}>{canton.canton}</option>
+                                                ))
+                                            }
+                                            
+                                        </select>
+                                    </div>
+                                    <div className='my-5'>
                                         <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='idParroquia'>Parroquia</label>
                                         <select id="idParroquia" className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black '
                                             value={idParroquia}
                                             onChange={(e) => setIdParroquia(e.target.value)}
                                         >
-                                            
-                                             {/* {
-                                                club.map( alumno => (
-                                                <option key={alumno.idParroquia} value={alumno.idParroquia}>{alumno.idParroquia}</option>
-                                                ))
-                                            } */}
                                             <option value="" >--Seleccione--</option>
-                                            <option value="Masculino">Masculino</option>
-                                            <option value="Femenino">Femenino</option>
-                                            <option value="Otros">Otros</option>
+                                             
+                                            {
+                                                parroquias.map( parroquia => (
+                                                <option key={parroquia.idParroquia} value={parroquia.idParroquia}>{parroquia.parroquia}</option>
+                                                ))
+                                            }
+                                            
     
                                         </select>
                                     </div>
+                                    
                                     <div className='my-5'>
                                         <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='direccion'>Dirección*</label>
                                         <input
