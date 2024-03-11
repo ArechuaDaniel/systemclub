@@ -15,6 +15,7 @@ import Asenso from './auth/Asenso'
 import MostrarInstructores from './auth/MostrarInstructores'
 import EditarClub from './auth/EditarClub'
 import CrearInstructor from './auth/CrearInstructor'
+import VerAlumno from './auth/VerAlumno'
 
 function App() {
 
@@ -41,10 +42,11 @@ function App() {
             <Route path='editar-club' element={<EditarClub />} />
             <Route path='crear-instructor' element={<CrearInstructor />} />
             <Route path='instructores' element={<MostrarInstructores />} />
-            <Route path='instructor' element={<Instructor />} />
+            <Route path='editar-instructor/:id' element={<Instructor />} />
             <Route path='perfil' element={<Perfil />} />
             <Route path='cambiar-password' element={<CambiarPassword />} />
             <Route path='alumnos' element={<MostrarAlumnos />} />
+            <Route path='mostrar-alumno/:id' element={<VerAlumno />} />
             <Route path='asensos' element={<Asenso />} />
           </Route>
 

@@ -4,7 +4,7 @@ import { Link, NavLink} from "react-router-dom";
 import { useEffect, useState } from "react";
 import { edadFecha } from "../helpers/formatearFecha";
 import Swal from "sweetalert2";
-import { startLoadingInstructor } from "../store/instructor/thunks";
+import { deleteInstructor, startLoadingInstructor } from "../store/instructor/thunks";
 
 
 const MostrarInstructores = () => {
@@ -35,10 +35,10 @@ const MostrarInstructores = () => {
             //dispatch(startLoadingAlumnos())
             dispatch(startLoadingInstructor())
         }, [])
-        const eliminar = (cedulaAlumno) => {
+        const eliminar = (cedulaInstructor) => {
             //console.log(idHorario);
             Swal.fire({
-                title: "¿Estas seguro de eliminar el Alumno?",
+                title: "¿Estas seguro de eliminar el Instructor?",
                 //text: "You won't be able to revert this!",
                 icon: "question",
                 showCancelButton: true,
@@ -49,13 +49,13 @@ const MostrarInstructores = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
                     Swal.fire({
-                        title: "Ha eliminado el Alumno!",
+                        title: "Ha eliminado el Instructor!",
                         //text: "Your file has been deleted.",
                         icon: "success"
                         
                     });
     
-                    dispatch(deleteAlumno({cedulaAlumno}))
+                    dispatch(deleteInstructor({cedulaInstructor}))
                     
                 }
             });
@@ -96,7 +96,7 @@ const MostrarInstructores = () => {
                             <div className="bg-gray-200 rounded-xl p-3  md:w-1/3 w-full flex justify-between ">
                                 
                                 <input className=" bg-gray-200  uppercase w-full "
-                                    value={search}
+                                    //value={search}
                                     onChange={searcher}
                                     type="text"
                                     id="search"
@@ -156,9 +156,9 @@ const MostrarInstructores = () => {
                                                 <td className='  text-left p-3 capitalize'>{instructor.genero}</td>
                                                 <td className='  text-left p-3 capitalize'>{instructor.direccion}</td>
     
-                                                <td className='  text-left p-3 flex'><Link to={`/tkdsystem/api/editar-alumno/${instructor.cedulaAlumno}`}
+                                                <td className='  text-left p-3 flex'><Link to={`/systemclub/api/editar-instructor/${instructor.cedulaInstructor}`}
                                                     className="bg-sky-600 p-2 rounded-xl text-white uppercase font-bold hover:bg-sky-700 text-center mr-2 "><span className="material-symbols-outlined text-center align-middle ">
-                                                        edit_square
+                                                        preview
                                                     </span></Link>
                                                     
                                                     <Link 

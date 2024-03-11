@@ -1,7 +1,7 @@
 import Barra from "../components/Barra";
 import { useDispatch, useSelector } from "react-redux";
 //import { deleteAlumno, startLoadingAlumnos } from "../store/alumno/thunk";
-import { Link, NavLink} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { edadFecha } from "../helpers/formatearFecha";
 import Swal from "sweetalert2";
@@ -12,26 +12,26 @@ const MostrarAlumnos = () => {
 
 
     const dispatch = useDispatch();
-    const { alumnos } = useSelector(state => state.instructor);
-    
+    const { alumnos, instructores } = useSelector(state => state.instructor);
+
     const [search, setSearch] = useState("")
     let numero = 0;
 
     const searcher = (e) => {
         setSearch(e.target.value)
     }
-    
+
     let results = []
     if (!search) {
         results = alumnos
         //console.log(results); 
     }
     else {
-        results = alumnos.filter((dato) => dato.primerNombre.toLowerCase().includes(search.toLocaleLowerCase()) || dato.primerApellido.toLowerCase().includes(search.toLocaleLowerCase()) || dato.cedulaAlumno.toLowerCase().includes(search.toLocaleLowerCase()) || dato.genero.toLowerCase().includes(search.toLocaleLowerCase()))
+        results = alumnos.filter((dato) => dato.primerNombre.toLowerCase().includes(search.toLocaleLowerCase()) || dato.primerApellido.toLowerCase().includes(search.toLocaleLowerCase()) || dato.cedulaAlumno.toLowerCase().includes(search.toLocaleLowerCase()) || dato.genero.toLowerCase().includes(search.toLocaleLowerCase()) || dato.cedulaInstructor.toLowerCase().includes(search.toLocaleLowerCase()))
     }
 
     useEffect(() => {
-      
+
         dispatch(startLoadingAlumnos())
     }, [])
     const eliminar = (cedulaAlumno) => {
@@ -51,29 +51,30 @@ const MostrarAlumnos = () => {
                     title: "Ha eliminado el Alumno!",
                     //text: "Your file has been deleted.",
                     icon: "success"
-                    
+
                 });
 
-                dispatch(deleteAlumno({cedulaAlumno}))
-                
+                dispatch(deleteAlumno({ cedulaAlumno }))
+
             }
         });
-        
+
     }
 
     return (
         <>
-            
+
             <div className="flex md:flex-row flex-col">
                 <Barra />
 
                 <div className=' overflow-auto h-screen w-screen shadow-2xl md:w-4/5 '>
                     <div className="flex justify-around items-center m-10 ">
                         <h1 className='text-sky-600 font-black md:text-3xl text-2xl'>
-                        <span className="material-symbols-outlined align-middle text-3xl mr-2">
-                            groups 
+                            <span className="material-symbols-outlined align-middle text-3xl mr-2">
+                                groups
                             </span>
                             Datos  de los Alumnos </h1>
+                        
                         <NavLink
                             className=''
                             to={'/tkdsystem/api/crear-alumno'}>
@@ -87,51 +88,78 @@ const MostrarAlumnos = () => {
                         </NavLink>
 
                     </div>
+                    
+
+                
 
 
 
                     {/* BUSCAR ALUMNOS */}
                     <div className="flex md:flex-row flex-col-reverse items-center justify-evenly  shadow-md">
                         <div className="bg-gray-200 rounded-xl p-3  md:w-1/3 w-full flex justify-between ">
-                            
+
                             <input className=" bg-gray-200  uppercase w-full "
-                                value={search}
+                                //value={search}
                                 onChange={searcher}
                                 type="text"
                                 id="search"
                                 placeholder="Buscar"
-                            />    
+                            />
                             <span className="material-symbols-outlined align-middle">search</span>
                         </div>
 
+                        <div className="mt-10 flex items-center">
+                       
+                        <div className="bg-yellow-500  hover:bg-yellow-600 hover:font-bold text-white cursor-default rounded-lg shadow-2xl ml-10 p-6 ">
+                            <h3 className="md:text-3xl text-2xl flex flex-col items-center">Alumnos  <span className="font-bold  text-4xl">{alumnos.length}</span></h3>
+                        </div>
+
+                    </div>
+
                         <div className="flex md:justify-end justify-center p-3">
-                                <div className="bg-gray-100 rounded-lg shadow-2xl w-48 ml-10 p-3 uppercase">
-                                    <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='genero'>Género</label>
-                                     <select 
-                                        className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black'
-                                        name="genero"
-                                        id='genero'
-                                        
-                                        onChange={searcher}
-                                     >
-                                        <option value="">--Seleccione--</option>
-                                        <option value="Masculino">Masculino</option>
-                                        <option value="Femenino">Femenino</option>
-                                        {/* {
+                            <div className="bg-gray-100 rounded-lg shadow-2xl w-48 ml-10 p-3 uppercase">
+                                <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='genero'>Género</label>
+                                <select
+                                    className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black'
+                                    name="genero"
+                                    id='genero'
+
+                                    onChange={searcher}
+                                >
+                                    <option value="">--Seleccione--</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Femenino">Femenino</option>
+                                    {/* {
                                        alumnos.map( alumno => (
                                             <option key={alumno.genero} value={alumno.genero}>{alumno.genero}</option>
                                         ))
                                         } */}
-                                    
-                                        
-                                    </select>
-                                </div>
-                                </div>
-                        <div className="flex md:justify-end justify-center p-3">
-                            <div className="bg-gray-100 rounded-lg shadow-2xl w-48 ml-10 p-3 capitalize">
-                                <h3>Total Alumnos : <span  className="font-bold">{alumnos.length}</span></h3>
+
+
+                                </select>
                             </div>
+                            <div className="bg-gray-100 rounded-lg shadow-2xl w-48 ml-10 p-3 uppercase">
+                                <label className='capitalize text-gray-600  text-xl font-bold' htmlFor='cedulaInstructor'>Instructor</label>
+                                <select
+                                    className='w-full mt-3 p-3 border rounded-xl bg-gray-50 text-black'
+                                    name="cedulaInstructor"
+                                    id='cedulaInstructor'
+
+                                    onChange={searcher}
+                                >
+                                    <option value="">--Seleccione--</option>
+                                    {
+                                        instructores.map(instructor => (
+                                            <option key={instructor.cedulaInstructor} value={instructor.cedulaInstructor}>{`${instructor.primerNombre} ${instructor.primerApellido}`}</option>
+                                        ))
+                                    }
+
+
+                                </select>
+                            </div>
+
                         </div>
+
                     </div>
 
 
@@ -147,6 +175,7 @@ const MostrarAlumnos = () => {
                                     <th className=' w-32 text-left p-3' >Edad</th>
                                     <th className=' w-32 text-left p-3' >Género</th>
                                     <th className=' w-32 text-left p-3'>Estado</th>
+                                    <th className=' w-48 text-left p-3'>Instructor</th>
                                     <th className=' w-32 text-left p-3'>Acción</th>
 
                                 </tr>
@@ -158,33 +187,26 @@ const MostrarAlumnos = () => {
                                             <td className=' text-center p-3 '> {numero = numero + 1}</td>
                                             <td className=' text-left p-3 '>{alm.cedulaAlumno} </td>
                                             <td className=' text-left p-3 capitalize'>{alm.primerApellido + ' ' + alm.primerNombre}</td>
-                                            <td className='  text-left p-3'>{edadFecha(alm.fechaNacimiento)+' '}años</td>
+                                            <td className='  text-left p-3'>{edadFecha(alm.fechaNacimiento) + ' '}años</td>
                                             <td className='  text-left p-3 capitalize'>{alm.genero}</td>
                                             <td className='  text-left p-3 capitalize'>{alm.estado}</td>
+                                            <td className=' text-left p-3 capitalize'>{alm.nombreInstructor + ' ' + alm.apellidoInstructor}</td>
 
-                                            <td className='  text-left p-3 flex'><Link to={`/tkdsystem/api/editar-alumno/${alm.cedulaAlumno}`}
+                                            <td className='  text-left p-3 flex'><Link to={`/systemclub/api/mostrar-alumno/${alm.cedulaAlumno}`}
                                                 className="bg-sky-600 p-2 rounded-xl text-white uppercase font-bold hover:bg-sky-700 text-center mr-2 "><span className="material-symbols-outlined text-center align-middle ">
-                                                    edit_square
+                                                    visibility
                                                 </span></Link>
-                                                
-                                                <Link 
-                                                    
-                                                    className='bg-red-500 p-2 rounded-xl text-white uppercase font-bold hover:bg-red-600 text-center'
-                                                    onClick={() => eliminar(alm.cedulaAlumno)}
-                                                    >
-                                                    <span className="material-symbols-outlined align-middle">
-                                                        delete
-                                                    </span>
-                                                    </Link>
+
+                                            
                                             </td>
-                                        </tr> 
+                                        </tr>
                                     ))
                                 }
 
                             </tbody>
                         </table>
                     </div>
-                </div> 
+                </div>
             </div>
         </>
     )

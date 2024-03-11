@@ -1,5 +1,5 @@
 import Swal from "sweetalert2"
-import { addInstructor, setAlumnos, setCantones, setClub, setInstructores, setPaises, setParroquias, setProvincias } from "./instructorSlice"
+import { addInstructor, eliminaInstructor, setAlumno, setAlumnos, setCantones, setClub, setInstructor, setInstructores, setPaises, setParroquias, setProvincias } from "./instructorSlice"
 import axios from "axios"
 
 export const startLoadingClub = () => {
@@ -173,6 +173,51 @@ export const startLoadingInstructor = () => {
         }
     }
 }
+export const mostrarInstructor = ({cedulaInstructor}) => {
+
+    return async (dispatch, getState) => {
+
+
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            return
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/club/instructor/${cedulaInstructor}`, config)
+            console.log(data);
+
+            
+            const verInstructor = data;
+            
+            // data.forEach(dato => {
+            //     verInstructor.push({ id: dato.idClub, ...dato });
+
+            // })
+            
+            dispatch(setInstructor(verInstructor))
+            //console.log(alumnos);
+            //return alumnos;
+
+
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+            //title: error.response.data.message,
+            //text: "That thing is still around?",
+            icon: "warning"
+            
+        });
+        }
+    }
+}
 export const startCreateInstructor = ({cedulaInstructor,primerApellido,segundoApellido,primerNombre,segundoNombre,fechaNacimiento,direccion,idParroquia,fechaRegistro,telefono, genero, tipoSangre, correo, password}) => {
     
     return async(dispatch) => {
@@ -297,7 +342,42 @@ export const updatePassword = ({cedulaInstructor,password }) => {
         }
     }
 }
+export const deleteInstructor = ({cedulaInstructor}) => {
+    return async (dispatch, getState) => {
+        
+        const token = localStorage.getItem('token')
+        if (!token) {
+            return
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+        
+        try {
 
+            
+            const { data } = await axios.delete(`${import.meta.env.VITE_BACKEND_URL}/api/club/instructor/${cedulaInstructor}`, config)
+            
+            
+
+            dispatch(eliminaInstructor({cedulaInstructor}))
+            
+                    
+
+    } catch (error) {
+        console.log(error);
+        // Swal.fire({
+        //     title: error.response.data.message,
+        //     //text: "That thing is still around?",
+        //     icon: "warning"
+            
+        // });
+    }
+}
+}
 
 export const startLoadingAlumnos = () => {
 
@@ -340,6 +420,47 @@ export const startLoadingAlumnos = () => {
         }
     }
 }
+export const startLoadingAlumno = ({cedulaAlumno}) => {
+
+    return async (dispatch, getState) => {
+
+
+        const token = localStorage.getItem('token')
+
+        if (!token) {
+            return
+        }
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`
+            }
+        }
+
+        try {
+            const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/club/alumnos/${cedulaAlumno}`, config)
+            //console.log(data);
+            //const { cedulaAlumno } = getState().auth;
+            const alumno = data;
+            // data.forEach(dato => {
+            //     alumnos.push({ id: dato.cedulaAlumno, ...dato });
+
+            // })
+            dispatch(setAlumno(alumno))
+            //console.log(alumnos);
+            //return alumnos;
+
+
+        } catch (error) {
+            Swal.fire({
+            title: error.response.data.message,
+            //text: "That thing is still around?",
+            icon: "warning"
+            
+        });
+        }
+    }
+}
 export const startLoadingPaises = () => {
 
     return async (dispatch, getState) => {
@@ -359,7 +480,7 @@ export const startLoadingPaises = () => {
         
         try {
             const { data } = await axios(`${import.meta.env.VITE_BACKEND_URL}/api/ubicacion`, config)
-            console.log(data);
+            //console.log(data);
             const paises = [];
             
             data.forEach(dato => {
@@ -372,13 +493,7 @@ export const startLoadingPaises = () => {
 
 
         } catch (error) {
-            console.log(error);
-            Swal.fire({
-            title: error.response.data.message,
-            //text: "That thing is still around?",
-            icon: "warning"
-            
-        });
+           
         }
     }
 }
@@ -415,13 +530,7 @@ export const startLoadingProvincias = () => {
 
 
         } catch (error) {
-            console.log(error);
-            Swal.fire({
-            title: error.response.data.message,
-            //text: "That thing is still around?",
-            icon: "warning"
             
-        });
         }
     }
 }
@@ -458,7 +567,7 @@ export const startLoadingCantones = ({idProvincia}) => {
 
 
         } catch (error) {
-            console.log(error);
+            
             
         
         }
@@ -496,10 +605,11 @@ export const startLoadingParroquias = ({idCanton}) => {
 
 
         } catch (error) {
-            console.log(error);
+            
             
             
         
         }
     }
 }
+

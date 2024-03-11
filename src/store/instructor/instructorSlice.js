@@ -10,8 +10,10 @@ export const instructorSlice = createSlice({
 
         club: '',
         instructores: [],
+        verInstructor: '',
 
         alumnos: [],
+        alumno: '',
 
 
     },
@@ -46,6 +48,11 @@ export const instructorSlice = createSlice({
             state.instructores = action.payload
 
         },
+        setInstructor: (state, action) => {
+            
+            state.verInstructor = action.payload
+
+        },
         addInstructor: (state, {payload}) => {
             state.instructores.push(payload)
         },
@@ -54,7 +61,25 @@ export const instructorSlice = createSlice({
             state.alumnos = action.payload
 
         },
+        setAlumno: (state, action) => {
+            
+            state.alumno = action.payload
+
+        },
+        eliminaInstructor: (state, {payload}) => {
+            
+            const instructores = payload
+            const {cedulaInstructor} = instructores
+            
+            //console.log(horarios);
+            const foundInstructor = state.instructores.find(instructor => instructor.cedulaInstructor === instructores.cedulaInstructor)
+            
+            if (foundInstructor) {
+                state.instructores.splice(state.instructores.indexOf(foundInstructor),1);
+                //console.log(foundHorario);
+            }
+        },
     }
 });
 // Action creators are generated for each case reducer function
-export const { setPaises,setProvincias,setCantones,setParroquias,setAlumnos, setInstructores,addInstructor, setClub } = instructorSlice.actions;
+export const { setPaises,setProvincias,setCantones,setParroquias,setAlumnos,setAlumno, setInstructores,setInstructor,addInstructor, setClub, eliminaInstructor } = instructorSlice.actions;

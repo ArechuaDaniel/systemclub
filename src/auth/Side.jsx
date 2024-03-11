@@ -44,9 +44,9 @@ const Side = () => {
 
                             <button className='bg-sky-600 hover:bg-sky-700 p-3 text-white rounded-xl font-bold flex justify-center items-center capitalize'>
                                 <span className="material-symbols-outlined align-middle mr-2">
-                                    edit
+                                    person
                                 </span> 
-                                Ver información
+                                Ver Perfil
                             </button>
                         </NavLink>
                     </div>
@@ -62,12 +62,17 @@ const Side = () => {
 
                     {/* TOTAL DE ALUMNOS E INSTRUCTORES */}
                     <div className="mt-10 flex justify-around items-center">
-                        <div className="bg-sky-500  hover:bg-sky-600 hover:font-bold text-white cursor-default rounded-lg shadow-2xl ml-10 p-6  w-1/3">
+
+                        <NavLink 
+                            to='/systemclub/api/instructores'
+                            className="bg-sky-500  hover:bg-sky-600 hover:font-bold text-white cursor-default rounded-lg shadow-2xl ml-10 p-6  w-1/3">
                             <h3 className="md:text-3xl text-2xl flex flex-col items-center">Instructores  <span className="font-bold md:text-7xl text-4xl">{instructores.length}</span></h3>
-                        </div>
-                        <div className="bg-yellow-500  hover:bg-yellow-600 hover:font-bold text-white cursor-default rounded-lg shadow-2xl ml-10 p-6  w-1/3">
+                        </NavLink>
+                        <NavLink 
+                            to='/systemclub/api/alumnos'
+                            className="bg-yellow-500  hover:bg-yellow-600 hover:font-bold text-white cursor-default rounded-lg shadow-2xl ml-10 p-6  w-1/3">
                             <h3 className="md:text-3xl text-2xl flex flex-col items-center">Alumnos  <span className="font-bold  md:text-7xl text-4xl">{alumnos.length}</span></h3>
-                        </div>
+                        </NavLink>
 
                     </div>
 

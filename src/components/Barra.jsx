@@ -12,7 +12,7 @@ const Barra = () => {
         { name: "Alumnos", link: "/systemclub/api/alumnos", value: "groups" },
         { name: "Categorías", link: "/systemclub/api/alumnos", value: "category" },
         { name: "Campeonatos", link: "/systemclub/api/alumnos", value: "rewarded_ads" },
-        { name: "Asensos", link: "/systemclub/api/asensos", value: "license" },
+        //{ name: "Asensos", link: "/systemclub/api/asensos", value: "license" },
 
 
         //{ name: "Cerrar Sesión", link: "/tkdsystem/" },
@@ -52,7 +52,7 @@ const Barra = () => {
     }
     return (
         <>
-            <div className={` md:overflow-x-auto  md:h-screen shadow-2xl md:w-1/5 `}>
+            <div className={` md:overflow-x-auto  md:h-screen shadow-2xl md:w-1/5`}>
 
 
                 <div className='text-white  flex  flex-col md:justify-between  p-6 bg-sky-800 md:w-full'>
@@ -63,12 +63,12 @@ const Barra = () => {
 
 
 
-                        <div className='flex mt-4 bg-sky-500 p-3 md:justify-center rounded-full'>
-                            <span className="material-symbols-outlined align-middle mr-2">
-                                account_circle
+                        <div className='flex mt-4 bg-sky-500 p-3 justify-center items-center rounded-full'>
+                            <span className="material-symbols-outlined align-middle">
+                                sports_gymnastics
                             </span>
-                            <p className='capitalize font-bold'>
-                                {auth.director}
+                            <p className='capitalize font-bold text-center'>
+                                {auth.club}
                             </p>
                         </div>
                     </NavLink>
@@ -84,7 +84,7 @@ const Barra = () => {
                     {/* //<ion-icon name={open ? "close" : "menu"}></ion-icon> */}
 
                 </div>
-                <ul className={` bg-sky-800 text-white transition-all duration-150 ease-in absolute md:static  ${open ? "top-300" : "top-[-9090px]"}`}>
+                <ul className={` bg-sky-800 h-full text-white transition-all duration-150 ease-in absolute md:static  ${open ? "top-300" : "top-[-9090px]"}`}>
                     {
                         Links.map((Link) => (
                             <NavLink key={Link.name}
